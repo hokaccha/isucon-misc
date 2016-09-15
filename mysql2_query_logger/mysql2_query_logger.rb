@@ -6,7 +6,7 @@ module Mysql2QueryLogger
     Mysql2::Client.prepend(Mysql2QueryLogger::ClientMethods)
     Mysql2::Statement.prepend(Mysql2QueryLogger::StatementMethods)
 
-    @logger = Logger.new('/tmp/query.log')
+    @logger = Logger.new(file)
     @logger.formatter = proc { |severity, datetime, progname, message|
       message.to_json + "\n"
     }
