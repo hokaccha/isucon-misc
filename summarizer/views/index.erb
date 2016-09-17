@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Summary</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.6/css/theme.default.min.css">
+</head>
+<body>
+<h1>Access log summary</h1>
+<table class="tablesorter" hidden>
+<thead>
+<tr>
+<th>method</th>
+<th>path</th>
+<th>sum</th>
+<th>count</th>
+<th>average</th>
+<th>max</th>
+<th>min</th>
+</tr>
+</thead>
+<tbody>
+<% @access_summary.each do |summary| %>
+<tr>
+<td><%= summary[:method] %></td>
+<td><%= summary[:path] %></td>
+<td><%= format(summary[:sum]) %></td>
+<td><%= summary[:count] %></td>
+<td><%= format(summary[:average]) %></td>
+<td><%= format(summary[:max]) %></td>
+<td><%= format(summary[:min]) %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+
+<h1>Query log summary</h1>
+<table class="tablesorter" hidden>
+<thead>
+<tr>
+<th>SQL</th>
+<th>caller</th>
+<th>sum</th>
+<th>count</th>
+<th>average</th>
+<th>max</th>
+<th>min</th>
+</tr>
+</thead>
+<tbody>
+<% @query_summary.each do |summary| %>
+<tr>
+<td><%= summary[:sql] %></td>
+<td><%= summary[:callers].join(', ') %></td>
+<td><%= format(summary[:sum]) %></td>
+<td><%= summary[:count] %></td>
+<td><%= format(summary[:average]) %></td>
+<td><%= format(summary[:max]) %></td>
+<td><%= format(summary[:min]) %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.6/js/jquery.tablesorter.js"></script>
+<script>
+$("table").tablesorter().show();
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+access_log:
+  filepath: './access.log'
+  routes:
+    - get: '/initialize'
+    - get: '/login'
+    - post: '/login'
+    - get: '/register'
+    - post: '/register'
+    - get: '/logout'
+    - get: '/'
+    - get: '/@:account_name'
+    - get: '/posts'
+    - get: '/posts/:id'
+    - post: '/'
+    - get: '/image/:id.:ext'
+    - post: '/comment'
+    - get: '/admin/banned'
+    - post: '/admin/banned'
+query_log:
+  filepath: './query.log'
+  root_dir: '/home/isucon/private_isu/webapp/ruby'
