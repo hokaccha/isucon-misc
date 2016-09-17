@@ -19,7 +19,7 @@ module Mysql2QueryLogger
     result = yield
     duration = Time.now - start
 
-    @logger.info(sql:sql, file: "#{file}:#{line}", duration: duration)
+    @logger.info(sql:sql, caller: "#{file}:#{line}", duration: duration)
 
     result
   end
