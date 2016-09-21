@@ -61,6 +61,37 @@
 <% end %>
 </tbody>
 </table>
+
+<h1>Slow Query log summary</h1>
+<table class="tablesorter" hidden>
+<thead>
+<tr>
+<th>SQL</th>
+<th>sum</th>
+<th>count</th>
+<th>average</th>
+<th>lock sum</th>
+<th>lock average</th>
+<th>rows sum</th>
+<th>rows average</th>
+</tr>
+</thead>
+<tbody>
+<% @slow_query_summary.each do |summary| %>
+<tr>
+<td><%= summary[:sql] %></td>
+<td><%= format(summary[:sum]) %></td>
+<td><%= summary[:count] %></td>
+<td><%= format(summary[:average]) %></td>
+<td><%= format(summary[:lock_sum]) %></td>
+<td><%= format(summary[:lock_average]) %></td>
+<td><%= summary[:rows_sum] %></td>
+<td><%= summary[:rows_average] %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.27.6/js/jquery.tablesorter.js"></script>
 <script>
