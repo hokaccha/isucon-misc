@@ -19,3 +19,5 @@ access_log:
 query_log:
   filepath: './query.log'
   root_dir: '/home/isucon/private_isu/webapp/ruby'
+slow_query_log:
+  filepath: './slow_query.log'
