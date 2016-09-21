@@ -18,7 +18,7 @@ def config
 end
 
 helpers do
-  def format(ms)
-    "#{(ms * 1000).round(2)}ms"
+  def format(s)
+    "#{(s * 1000).round(2)}ms"
   end
 end
