@@ -10,6 +10,7 @@ class SlowQuerySummarizer
   end
 
   def summarize
+    return [] unless File.exists?(@filepath)
     File.readlines(@filepath)
       .slice_before { |line| line.start_with?("Count:") }
       .map { |lines|
