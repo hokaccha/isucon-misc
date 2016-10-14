@@ -1,0 +1,7 @@
+:verbose: true
+:pidfile: ./sidekiq.pid
+:logfile: ./sidekiq.log
+:concurrency:  25
+:require: ./worker.rb
+:queues:
+  - default
