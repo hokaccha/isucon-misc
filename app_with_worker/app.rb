@@ -1,10 +1,6 @@
 require 'sinatra'
-require 'sidekiq'
+require './config/sidekiq'
 require './jobs/hello_job'
-
-Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://isucon1', namespace: 'sidekiq' }
-end
 
 class IsuconApp < Sinatra::Base
   get '/' do

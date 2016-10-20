@@ -1,5 +1,0 @@
-vendor/bundle/
-.bundle/
-sidekiq.log
-sidekiq.pid
-Gemfile.lock

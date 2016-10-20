@@ -24,14 +24,14 @@ After=syslog.target network.target
 # http://0pointer.de/public/systemd-man/systemd.exec.html
 [Service]
 Type=simple
-WorkingDirectory=/home/ubuntu/app
+WorkingDirectory=/home/ubuntu/app/current/app_with_worker
+Environment=RACK_ENV=production
 # If you use rbenv:
 # ExecStart=/bin/bash -lc 'bundle exec sidekiq -e production'
 # If you use the system's ruby:
 ExecStart=/usr/local/bin/bundle exec sidekiq -e production -C sidekiq.yml
 User=ubuntu
 Group=ubuntu
-UMask=0002
 
 # if we crash, restart
 RestartSec=1
