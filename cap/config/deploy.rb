@@ -6,7 +6,9 @@ set :deploy_to, '/home/ubuntu/app'
 
 set :bundle_gemfile, -> { release_path.join('cap', 'Gemfile') }
 
-namespace :systemd do
+after :deploy, 'systemctl:restart'
+
+namespace :systemctl do
   desc 'Setup systemd'
   task :setup do
     on roles(:app), in: :parallel do |host|
@@ -16,16 +18,22 @@ namespace :systemd do
       sudo 'systemctl daemon-reload'
     end
 
-    # on roles(:worker), in: :parallel do |host|
-    #   uptime = capture(:uptime)
-    #   puts "#{host.hostname} reports: #{uptime}"
-    # end
+    on roles(:worker), in: :parallel do |host|
+      upload! 'config/sidekiq.service', '/tmp/sidekiq.service'
+      sudo 'cp /tmp/sidekiq.service /etc/systemd/system/sidekiq.service'
+      sudo 'systemctl enable sidekiq'
+      sudo 'systemctl daemon-reload'
+    end
   end
 
   desc 'systemctl start'
   task :start do
     on roles(:app), in: :parallel do |host|
       sudo 'systemctl start unicorn'
+    end
+
+    on roles(:worker), in: :parallel do |host|
+      sudo 'systemctl start sidekiq'
     end
   end
 
@@ -34,12 +42,20 @@ namespace :systemd do
     on roles(:app), in: :parallel do |host|
       sudo 'systemctl stop unicorn'
     end
+
+    on roles(:worker), in: :parallel do |host|
+      sudo 'systemctl stop sidekiq'
+    end
   end
 
   desc 'systemctl restart'
   task :restart do
     on roles(:app), in: :parallel do |host|
       sudo 'systemctl restart unicorn'
+    end
+
+    on roles(:worker), in: :parallel do |host|
+      sudo 'systemctl restart sidekiq'
     end
   end
 end

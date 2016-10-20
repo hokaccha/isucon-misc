@@ -2,7 +2,7 @@
 Description = isucon application
 
 [Service]
-WorkingDirectory=/home/ubuntu/app/cap
+WorkingDirectory=/home/ubuntu/app/current/cap
 Environment=RACK_ENV=production
 
 ExecStart = /usr/local/bin/bundle exec -- unicorn --port 5000
