@@ -2,6 +2,7 @@ lock '3.6.1'
 
 set :application, 'isucon'
 set :repo_url, 'git@github.com:hokaccha/isucon-misc.git'
+set :branch, ENV['branch'] || 'master'
 set :deploy_to, '/home/ubuntu/app'
 set :app_dir, 'app_with_worker'
 
