@@ -12,51 +12,32 @@ after :deploy, 'systemctl:restart'
 namespace :systemctl do
   desc 'Setup systemd'
   task :setup do
-    on roles(:app), in: :parallel do |host|
-      upload! 'config/unicorn.service', '/tmp/unicorn.service'
-      sudo 'cp /tmp/unicorn.service /etc/systemd/system/unicorn.service'
-      sudo 'systemctl enable unicorn'
-      sudo 'systemctl daemon-reload'
-    end
-
-    on roles(:worker), in: :parallel do |host|
-      upload! 'config/sidekiq.service', '/tmp/sidekiq.service'
-      sudo 'cp /tmp/sidekiq.service /etc/systemd/system/sidekiq.service'
-      sudo 'systemctl enable sidekiq'
-      sudo 'systemctl daemon-reload'
+    on roles(:all), in: :parallel do |host|
+      upload! "config/#{host.fetch(:service)}.service", "/tmp/#{host.fetch(:service)}.service"
+      sudo "cp /tmp/#{host.fetch(:service)}.service /etc/systemd/system/#{host.fetch(:service)}.service"
+      sudo "systemctl enable #{host.fetch(:service)}"
+      sudo "systemctl daemon-reload"
     end
   end
 
   desc 'systemctl start'
   task :start do
-    on roles(:app), in: :parallel do |host|
-      sudo 'systemctl start unicorn'
-    end
-
-    on roles(:worker), in: :parallel do |host|
-      sudo 'systemctl start sidekiq'
+    on roles(:all), in: :parallel do |host|
+      sudo "systemctl start #{host.fetch(:service)}"
     end
   end
 
   desc 'systemctl stop'
   task :stop do
-    on roles(:app), in: :parallel do |host|
-      sudo 'systemctl stop unicorn'
-    end
-
-    on roles(:worker), in: :parallel do |host|
-      sudo 'systemctl stop sidekiq'
+    on roles(:all), in: :parallel do |host|
+      sudo "systemctl stop #{host.fetch(:service)}"
     end
   end
 
   desc 'systemctl restart'
   task :restart do
-    on roles(:app), in: :parallel do |host|
-      sudo 'systemctl restart unicorn'
-    end
-
-    on roles(:worker), in: :parallel do |host|
-      sudo 'systemctl restart sidekiq'
+    on roles(:all), in: :parallel do |host|
+      sudo "systemctl restart #{host.fetch(:service)}"
     end
   end
 end

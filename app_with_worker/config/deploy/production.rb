@@ -1,2 +1,2 @@
-role :app, ['isucon1']
-role :worker, ['isucon2']
+role :app, ['isucon1'], service: 'unicorn'
+role :worker, ['isucon2'], service: 'sidekiq'
