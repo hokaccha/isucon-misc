@@ -2,10 +2,13 @@ require 'mustermann'
 require 'table_print'
 
 ROUTES = [
-  { get: '/@:account_name' },
-  { get: '/posts/:id' },
-  { get: '/image/:id.:ext' },
+  { get: '/channel/:channel_id' },
+  { get: '/history/:channel_id' },
+  { get: '/profile/:user_name' },
+  { get: '/icons/:file_name' },
   { get: '/js/:file' },
+  { get: '/fonts/:file' },
+  { get: '/css/:file' },
 ]
 
 LOG_FILE_PATH = './access.log'
